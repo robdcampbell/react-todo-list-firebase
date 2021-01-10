@@ -34,7 +34,7 @@ const App = () => {
       .onSnapshot((snapshot) => {
         setTodos(
           snapshot.docs.map((doc) => {
-            return doc.data().todo;
+            return { id: doc.id, todo: doc.data().todo };
           })
         );
       });
@@ -53,9 +53,7 @@ const App = () => {
             value={input}
             onChange={(e) => setInput(e.target.value)}
           />
-          <FormHelperText id="my-helper-text">
-            We'll never share your email.
-          </FormHelperText>
+          <FormHelperText id="my-helper-text">Enter a task</FormHelperText>
         </FormControl>
 
         <Button
@@ -71,8 +69,8 @@ const App = () => {
 
       <div className="container">
         <ul>
-          {todos.map((todo, index) => {
-            return <Todo key={index} text={todo} />;
+          {todos.map((todo) => {
+            return <Todo key={todo.id} todo={todo} />;
           })}
         </ul>
       </div>

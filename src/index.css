@@ -154,6 +154,19 @@ Form
 
 /*
 =============== 
+Form Output
+===============
+*/
+
+.task-card {
+  background-color: #fff;
+  border-bottom: #222 solid 1px;
+  margin-bottom: 2rem;
+  display: flex;
+}
+
+/*
+=============== 
 Navbar
 ===============
 */
