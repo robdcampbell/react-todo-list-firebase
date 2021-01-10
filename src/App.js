@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from "react";
 import {
   Button,
   FormControl,
@@ -5,8 +6,8 @@ import {
   Input,
   FormHelperText,
 } from "@material-ui/core";
-import React, { useState, useEffect } from "react";
 import Todo from "./components/Todo/Todo";
+import db from "./firebase";
 
 //const defaulTasks = ["Take out the trash", "Wash the dishes"];
 
@@ -14,6 +15,8 @@ const App = () => {
   const [todos, setTodos] = useState([]);
   const [input, setInput] = useState("");
   // const [loading, setLoading] = useState(false);
+
+  // When app loads, we need to listen to the fetch new todos ass added/removed
 
   const addTodo = (e) => {
     e.preventDefault();
@@ -25,7 +28,15 @@ const App = () => {
     console.log("please add something");
   };
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    db.collection("todos").onSnapshot((snapshot) => {
+      setTodos(
+        snapshot.docs.map((doc) => {
+          return doc.data().todo;
+        })
+      );
+    });
+  }, []);
 
   return (
     <div className="container">
