@@ -1,5 +1,6 @@
 import firebase from "firebase";
 
+// Store the string in an ENV file
 const firebaseApp = firebase.initializeApp({
   apiKey: "AIzaSyB2y95rAZkXuKTf8eDOpoGSsKRWKUUIMus",
   authDomain: "todo-app-react-735e7.firebaseapp.com",

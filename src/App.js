@@ -8,40 +8,42 @@ import {
 } from "@material-ui/core";
 import Todo from "./components/Todo/Todo";
 import db from "./firebase";
-
-//const defaulTasks = ["Take out the trash", "Wash the dishes"];
+import "./index.css";
+import firebase from "firebase";
 
 const App = () => {
   const [todos, setTodos] = useState([]);
   const [input, setInput] = useState("");
-  // const [loading, setLoading] = useState(false);
-
-  // When app loads, we need to listen to the fetch new todos ass added/removed
 
   const addTodo = (e) => {
     e.preventDefault();
 
-    if (input !== "") {
-      setTodos([...todos, input]);
-      setInput("");
-    }
-    console.log("please add something");
+    db.collection("todos").add({
+      todo: input,
+      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+    });
+
+    setTodos([...todos, input]);
+    setInput("");
   };
 
   useEffect(() => {
-    db.collection("todos").onSnapshot((snapshot) => {
-      setTodos(
-        snapshot.docs.map((doc) => {
-          return doc.data().todo;
-        })
-      );
-    });
+    // wiring up, to retreive data from firebase
+    db.collection("todos")
+      .orderBy("timestamp", "desc")
+      .onSnapshot((snapshot) => {
+        setTodos(
+          snapshot.docs.map((doc) => {
+            return doc.data().todo;
+          })
+        );
+      });
   }, []);
 
   return (
     <div className="container">
       <h1>Ok, Alright.</h1>
-      <form>
+      <form className="form-container">
         <FormControl>
           <InputLabel htmlFor="my-input">Write a todo.</InputLabel>
           <Input

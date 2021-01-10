@@ -123,6 +123,7 @@ p {
 /*  global classes */
 
 .container {
+  width: 70%;
   margin: 0 auto;
   padding-top: 3rem;
 }
@@ -138,6 +139,17 @@ p {
   .section {
     width: 95vw;
   }
+}
+
+/*
+=============== 
+Form
+===============
+*/
+
+.form-container {
+  width: 50%;
+  margin: auto;
 }
 
 /*
