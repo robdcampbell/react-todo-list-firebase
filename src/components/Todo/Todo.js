@@ -11,6 +11,7 @@ import {
 } from "@material-ui/core";
 import db from "../../firebase";
 import { makeStyles } from "@material-ui/core/styles";
+import firebase from "firebase";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -26,9 +27,18 @@ const useStyles = makeStyles((theme) => ({
 const Todo = (props) => {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
+  const [input, setInput] = useState("");
 
-  const handleOpen = () => {
-    setOpen(true);
+  const updateTodo = (e) => {
+    e.preventDefault();
+    db.collection("todos").doc(props.todo.id).set(
+      {
+        todo: input,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+      },
+      { merge: true }
+    );
+    setOpen(false);
   };
 
   return (
@@ -40,8 +50,17 @@ const Todo = (props) => {
         aria-describedby="simple-modal-description"
       >
         <div className={classes.paper}>
-          <h1>I am a modal</h1>
-          <button onClick={(e) => setOpen(false)}>Finished Editing</button>
+          <form>
+            <h1>I am a modal</h1>
+            <input
+              type="text"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+            />
+            <Button type="submit" onClick={updateTodo}>
+              Finished Editing
+            </Button>
+          </form>
         </div>
       </Modal>
       <List className="task-card">
@@ -54,7 +73,7 @@ const Todo = (props) => {
             secondary="Tentative deadline..."
           />
         </ListItem>
-        <button onClick={(e) => setOpen(true)}>Edit</button>
+        <Button onClick={(e) => setOpen(true)}>Edit</Button>
         <Button
           onClick={(e) => {
             console.log(props.todo.id);
