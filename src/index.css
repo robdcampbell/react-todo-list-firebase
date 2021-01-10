@@ -167,6 +167,16 @@ Form Output
 
 /*
 =============== 
+Modal
+===============
+*/
+
+.modal-container {
+  background-color: red;
+}
+
+/*
+=============== 
 Navbar
 ===============
 */

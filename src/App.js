@@ -42,7 +42,8 @@ const App = () => {
 
   return (
     <div className="container">
-      <h1>Ok, Alright.</h1>
+      <h1>Tasks:</h1>
+      <h4>(let's get things done)</h4>
       <form className="form-container">
         <FormControl>
           <InputLabel htmlFor="my-input">Write a todo.</InputLabel>
