@@ -28,9 +28,12 @@ const Todo = (props) => {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState("");
+  // const [modalInput, setModalInput] = useState("");
 
   const updateTodo = (e) => {
     e.preventDefault();
+    setInput(props.todo.todo);
+
     db.collection("todos").doc(props.todo.id).set(
       {
         todo: input,
@@ -38,6 +41,7 @@ const Todo = (props) => {
       },
       { merge: true }
     );
+    setInput("");
     setOpen(false);
   };
 
@@ -53,9 +57,12 @@ const Todo = (props) => {
           <form>
             <h1>I am a modal</h1>
             <input
+              placeholder={props.todo.todo}
               type="text"
               value={input}
-              onChange={(e) => setInput(e.target.value)}
+              onChange={(e) => {
+                setInput(e.target.value);
+              }}
             />
             <Button type="submit" onClick={updateTodo}>
               Finished Editing
